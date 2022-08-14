@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.apiauthentication.ui.register.RegisterFragment"
+        android:label="log_in_fragment"
+        tools:layout="@layout/register_fragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.apiauthentication.ui.welcome.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        tools:layout="@layout/log_in_fragment"
+        android:name="com.example.apiauthentication.ui.login.LogInFragment"
+        android:label="LogInFragment" />
+</navigation>
