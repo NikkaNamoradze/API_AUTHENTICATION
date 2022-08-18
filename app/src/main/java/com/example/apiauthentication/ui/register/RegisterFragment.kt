@@ -19,9 +19,11 @@ import com.example.apiauthentication.utils.Resource
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class RegisterFragment : BaseFragment<RegisterFragmentBinding>(RegisterFragmentBinding::inflate) {
+class RegisterFragment : BaseFragment<RegisterFragmentBinding, RegisterViewModel>(
+    RegisterFragmentBinding::inflate,
+    RegisterViewModel::class.java
+) {
 
-    private val viewModel: RegisterViewModel by viewModels()
 
     override fun start() {
         listeners()
@@ -38,19 +40,24 @@ class RegisterFragment : BaseFragment<RegisterFragmentBinding>(RegisterFragmentB
         }
     }
 
-    private fun observer(){
+    private fun observer() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.registerState.collect{
-                    when(it){
-                        is Resource.Success-> {
-                            Toast.makeText(context, "registered successfully ${it.data.token}", Toast.LENGTH_SHORT).show()
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.registerState.collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            Toast.makeText(
+                                context,
+                                getString(R.string.registered_successfully) + it.data.token,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                        is Resource.Failure->{
+                        is Resource.Failure -> {
                             Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()
                         }
-                        is Resource.Loading->{
-                            Toast.makeText(context, "loading...", Toast.LENGTH_SHORT).show()
+                        is Resource.Loading -> {
+                            Toast.makeText(context, getString(R.string.loading), Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }
